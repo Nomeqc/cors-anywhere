@@ -37,6 +37,7 @@ Request examples:
 * `http://localhost:8080/google.com:443` - Proxies `https://google.com/`
 * `http://localhost:8080/` - Shows usage text, as defined in `lib/help.txt`
 * `http://localhost:8080/favicon.ico` - Replies 404 Not found
+* `http://localhost:8080/?download=https://static.dingtalk.com/media/lALPDiQ3QI5f8ePNAUjNBDg_1080_328.png&filename=test.png` - download image save as `test.png`
 
 Live examples:
 
