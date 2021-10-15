@@ -64,10 +64,6 @@ cors_proxy.createServer({
         // Do not add X-Forwarded-For, etc. headers, because Heroku already adds it.
         xfwd: false,
     },
-    // modifying reponse headers.
-    setResponseHeaders: {
-        "access-control-allow-origin": "*"
-    },
     getRequestUrl: function(req) {
         let url = req.url.split('?')[1]
         let params = parseUrlParams(url ? url : '');
@@ -75,15 +71,14 @@ cors_proxy.createServer({
 
         return requestUrl ? requestUrl : req.url.slice(1);
     },
+    // modifying reponse headers.
     responseHeadersHandler: function(headers, req) {
-        //有originUrl属性说明 是代理后的请求响应
-        if (req.originUrl) {
-            let url = req.originUrl.split('?')[1];
-            let params = parseUrlParams(url ? url : '');
-            if (params['download'] && params['filename']) {
-                let filename = encodeURI(params['filename']);
-                headers['content-disposition'] = `attachment; filename="${filename}"; filename*=UTF-8''${filename}`;
-            }
+        // console.log('----------req----------:', req);
+        let url = req.originUrl.split('?')[1];
+        let params = parseUrlParams(url ? url : '');
+        if (params['download'] && params['filename']) {
+            let filename = encodeURI(params['filename']);
+            headers['content-disposition'] = `attachment; filename="${filename}"; filename*=UTF-8''${filename}`;
         }
     }
 }).listen(port, host, function() {
